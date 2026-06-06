@@ -20,7 +20,7 @@ simd-json = "0.14"
 reqwest = { version = "0.12", features = ["json", "gzip"] }
 chrono = { version = "0.4", features = ["serde"] }
 chrono-tz = "0.10"
-sysinfo = "0.33"
+sysinfo = "0.39"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 dotenvy = "0.15"
