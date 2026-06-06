@@ -8,7 +8,8 @@ pub async fn time(
     let tz = timezone.unwrap_or_else(|| "UTC".to_string());
     match time::now_in_timezone(&tz) {
         Ok(result) => {
-            ctx.say(format!("🕐 **Current time ({})**: {}", tz, result)).await?;
+            ctx.say(format!("🕐 **Current time ({})**: {}", tz, result))
+                .await?;
         }
         Err(_e) => {
             let suggestions = time::list_timezones(&tz);

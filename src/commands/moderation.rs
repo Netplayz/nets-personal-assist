@@ -17,9 +17,7 @@ pub async fn mute(
 
     ctx.say(format!(
         "🔇 Muted **{}** for {} minute(s). Reason: {}",
-        member.user.name,
-        duration,
-        reason
+        member.user.name, duration, reason
     ))
     .await?;
 
@@ -32,7 +30,9 @@ pub async fn unmute(
     #[description = "Member to unmute"] mut member: serenity::Member,
 ) -> Result<(), anyhow::Error> {
     let now = serenity::Timestamp::from_unix_timestamp(chrono::Utc::now().timestamp()).unwrap();
-    member.disable_communication_until_datetime(&ctx.http(), now).await?;
+    member
+        .disable_communication_until_datetime(&ctx.http(), now)
+        .await?;
 
     ctx.say(format!("🔊 Unmuted **{}**", member.user.name))
         .await?;
@@ -75,7 +75,15 @@ pub async fn memberinfo(
         .field("Display Name", display_name.to_owned(), true)
         .field("Joined Server", joined, true)
         .field("Account Created", created, true)
-        .field("Roles", if role_names.is_empty() { "None".to_string() } else { role_names.join(", ") }, false)
+        .field(
+            "Roles",
+            if role_names.is_empty() {
+                "None".to_string()
+            } else {
+                role_names.join(", ")
+            },
+            false,
+        )
         .thumbnail(user.face());
 
     ctx.send(poise::CreateReply::default().embed(embed)).await?;
@@ -119,7 +127,10 @@ pub async fn chatsummary(
         })
         .collect();
 
-    lines.insert(0, format!("📋 **Chat Summary** — last {} messages\n", count));
+    lines.insert(
+        0,
+        format!("📋 **Chat Summary** — last {} messages\n", count),
+    );
 
     for chunk in lines.chunks(15) {
         ctx.say(chunk.join("\n")).await?;

@@ -48,7 +48,11 @@ pub async fn init_db(pool: &SqlitePool) -> anyhow::Result<()> {
     Ok(())
 }
 
-pub async fn upsert_player(pool: &SqlitePool, roblox_id: i64, username: &str) -> anyhow::Result<Player> {
+pub async fn upsert_player(
+    pool: &SqlitePool,
+    roblox_id: i64,
+    username: &str,
+) -> anyhow::Result<Player> {
     sqlx::query_as::<_, Player>(
         "INSERT INTO players (roblox_id, username)
          VALUES (?, ?)
@@ -64,7 +68,10 @@ pub async fn upsert_player(pool: &SqlitePool, roblox_id: i64, username: &str) ->
     .map_err(Into::into)
 }
 
-pub async fn get_player_by_roblox(pool: &SqlitePool, roblox_id: i64) -> anyhow::Result<Option<Player>> {
+pub async fn get_player_by_roblox(
+    pool: &SqlitePool,
+    roblox_id: i64,
+) -> anyhow::Result<Option<Player>> {
     sqlx::query_as::<_, Player>("SELECT * FROM players WHERE roblox_id = ?")
         .bind(roblox_id)
         .fetch_optional(pool)
@@ -72,7 +79,10 @@ pub async fn get_player_by_roblox(pool: &SqlitePool, roblox_id: i64) -> anyhow::
         .map_err(Into::into)
 }
 
-pub async fn get_player_by_discord(pool: &SqlitePool, discord_id: i64) -> anyhow::Result<Option<Player>> {
+pub async fn get_player_by_discord(
+    pool: &SqlitePool,
+    discord_id: i64,
+) -> anyhow::Result<Option<Player>> {
     sqlx::query_as::<_, Player>("SELECT * FROM players WHERE discord_id = ?")
         .bind(discord_id)
         .fetch_optional(pool)

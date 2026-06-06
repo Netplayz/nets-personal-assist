@@ -1,5 +1,5 @@
-use std::net::IpAddr;
 use serde::{Deserialize, Serialize};
+use std::net::IpAddr;
 
 use super::cache::AppCache;
 

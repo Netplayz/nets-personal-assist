@@ -42,11 +42,7 @@ async fn try_connect(addr: &str, dur: Duration) -> bool {
     timeout(dur, TcpStream::connect(addr)).await.is_ok()
 }
 
-pub async fn scan_common_ports(
-    ip: IpAddr,
-    timeout_ms: u64,
-    concurrency: usize,
-) -> Vec<OpenPort> {
+pub async fn scan_common_ports(ip: IpAddr, timeout_ms: u64, concurrency: usize) -> Vec<OpenPort> {
     let dur = Duration::from_millis(timeout_ms);
     let sem = Arc::new(Semaphore::new(concurrency));
     let results: Vec<OpenPort> = Vec::with_capacity(COMMON_PORTS.len());

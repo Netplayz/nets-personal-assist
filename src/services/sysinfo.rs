@@ -63,7 +63,10 @@ pub fn gather_snapshot() -> SysInfoSnapshot {
         kernel: System::kernel_version().unwrap_or_default(),
         os: System::long_os_version().unwrap_or_default(),
         uptime: System::uptime(),
-        cpu_brand: cpus.first().map(|c| c.brand().to_string()).unwrap_or_default(),
+        cpu_brand: cpus
+            .first()
+            .map(|c| c.brand().to_string())
+            .unwrap_or_default(),
         cpu_count: cpus.len(),
         cpu_usage,
         total_memory: sys.total_memory(),

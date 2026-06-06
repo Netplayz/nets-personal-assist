@@ -33,7 +33,10 @@ pub async fn sysinfo(ctx: super::Context<'_>) -> Result<(), anyhow::Error> {
             } else {
                 0
             };
-            format!("`{}` — {:.1} GB / {:.1} GB ({}%)", d.mount, used_gb, total_gb, pct)
+            format!(
+                "`{}` — {:.1} GB / {:.1} GB ({}%)",
+                d.mount, used_gb, total_gb, pct
+            )
         })
         .collect();
 

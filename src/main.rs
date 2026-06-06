@@ -31,8 +31,7 @@ impl std::fmt::Debug for Data {
 async fn main() -> anyhow::Result<()> {
     tracing_subscriber::fmt()
         .with_env_filter(
-            EnvFilter::try_from_default_env()
-                .unwrap_or_else(|_| EnvFilter::new("info,sqlx=warn")),
+            EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info,sqlx=warn")),
         )
         .init();
 
@@ -60,9 +59,7 @@ async fn main() -> anyhow::Result<()> {
     sqlx::query("PRAGMA busy_timeout=5000")
         .execute(&pool)
         .await?;
-    sqlx::query("PRAGMA foreign_keys=ON")
-        .execute(&pool)
-        .await?;
+    sqlx::query("PRAGMA foreign_keys=ON").execute(&pool).await?;
 
     init_db(&pool).await?;
     tracing::info!("Database initialized.");
@@ -104,12 +101,9 @@ async fn main() -> anyhow::Result<()> {
         })
         .build();
 
-    let mut client = poise::serenity_prelude::ClientBuilder::new(
-        &discord_token,
-        intents,
-    )
-    .framework(framework)
-    .await?;
+    let mut client = poise::serenity_prelude::ClientBuilder::new(&discord_token, intents)
+        .framework(framework)
+        .await?;
 
     if let Err(why) = client.start().await {
         tracing::error!("Client error: {:?}", why);

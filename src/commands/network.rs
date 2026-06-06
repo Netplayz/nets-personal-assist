@@ -28,12 +28,9 @@ pub async fn ping(
     };
 
     let start = Instant::now();
-    let reachable = timeout(
-        Duration::from_secs(5),
-        TcpStream::connect((resolved, 80)),
-    )
-    .await
-    .is_ok();
+    let reachable = timeout(Duration::from_secs(5), TcpStream::connect((resolved, 80)))
+        .await
+        .is_ok();
     let elapsed = start.elapsed();
 
     let status = if reachable {
@@ -45,7 +42,11 @@ pub async fn ping(
     let embed = serenity::CreateEmbed::default()
         .title(format!("🌐 Ping — {}", host))
         .field("IP Address", resolved.to_string(), true)
-        .field("DNS Resolution", format!("{} ms", resolve_time.as_millis()), true)
+        .field(
+            "DNS Resolution",
+            format!("{} ms", resolve_time.as_millis()),
+            true,
+        )
         .field("TCP Port 80", status, false)
         .color(if reachable { 0x00FF00 } else { 0xFF0000 });
 
@@ -66,7 +67,8 @@ pub async fn portscan(
     let ip = if let Ok(ip) = resolve_host(&host) {
         ip
     } else {
-        ctx.say(format!("❌ DNS resolution failed: {}", host)).await?;
+        ctx.say(format!("❌ DNS resolution failed: {}", host))
+            .await?;
         return Ok(());
     };
 
@@ -95,11 +97,7 @@ pub async fn portscan(
         .map(|p| format!("`{:5}` — {}", p.port, p.service))
         .collect();
 
-    let header = format!(
-        "🔍 **Port Scan — {}** ({} open)\n",
-        ip,
-        open_ports.len()
-    );
+    let header = format!("🔍 **Port Scan — {}** ({} open)\n", ip, open_ports.len());
 
     for chunk in lines.chunks(20) {
         ctx.say(format!("{}\n{}", header, chunk.join("\n"))).await?;

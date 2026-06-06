@@ -2,7 +2,9 @@ use chrono::{DateTime, Utc};
 use chrono_tz::Tz;
 
 pub fn now_in_timezone(tz_str: &str) -> anyhow::Result<String> {
-    let tz: Tz = tz_str.parse().map_err(|_| anyhow::anyhow!("Invalid timezone: {}", tz_str))?;
+    let tz: Tz = tz_str
+        .parse()
+        .map_err(|_| anyhow::anyhow!("Invalid timezone: {}", tz_str))?;
     let now: DateTime<Utc> = Utc::now();
     let local = now.with_timezone(&tz);
     Ok(local.format("%Y-%m-%d %H:%M:%S %Z").to_string())

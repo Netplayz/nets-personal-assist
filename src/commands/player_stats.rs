@@ -45,11 +45,8 @@ pub async fn infractions(
     let player = match player {
         Some(p) => p,
         None => {
-            ctx.say(format!(
-                "Player with Roblox ID `{}` not found.",
-                roblox_id
-            ))
-            .await?;
+            ctx.say(format!("Player with Roblox ID `{}` not found.", roblox_id))
+                .await?;
             return Ok(());
         }
     };
@@ -79,7 +76,11 @@ pub async fn infractions(
 
     lines.insert(
         0,
-        format!("📋 **Infractions for {}** ({} total)\n", player.username, infractions.len()),
+        format!(
+            "📋 **Infractions for {}** ({} total)\n",
+            player.username,
+            infractions.len()
+        ),
     );
 
     for chunk in lines.chunks(15) {
