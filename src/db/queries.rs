@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 use sqlx::SqlitePool;
 
 use super::models::{Infraction, Mute, Player};

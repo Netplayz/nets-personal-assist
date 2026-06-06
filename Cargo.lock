@@ -1447,6 +1447,33 @@ dependencies = [
 ]
 
 [[package]]
+name = "nets-personal-assist"
+version = "0.1.0"
+dependencies = [
+ "ahash",
+ "anyhow",
+ "chrono",
+ "chrono-tz",
+ "dashmap 6.2.1",
+ "dotenvy",
+ "fastrand",
+ "itertools",
+ "moka",
+ "parking_lot",
+ "poise",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "serenity",
+ "simd-json",
+ "sqlx",
+ "sysinfo",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
 name = "ntapi"
 version = "0.4.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1563,33 +1590,6 @@ dependencies = [
  "libc",
  "pkg-config",
  "vcpkg",
-]
-
-[[package]]
-name = "operation-what-the-fuck"
-version = "0.1.0"
-dependencies = [
- "ahash",
- "anyhow",
- "chrono",
- "chrono-tz",
- "dashmap 6.2.1",
- "dotenvy",
- "fastrand",
- "itertools",
- "moka",
- "parking_lot",
- "poise",
- "reqwest",
- "serde",
- "serde_json",
- "serenity",
- "simd-json",
- "sqlx",
- "sysinfo",
- "tokio",
- "tracing",
- "tracing-subscriber",
 ]
 
 [[package]]
