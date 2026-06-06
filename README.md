@@ -1,4 +1,4 @@
-# Operation: What The Fuck
+# Nets Personal Assist
 
 A high-performance Discord moderation and utility bot written in Rust, built for Roblox community servers.
 
