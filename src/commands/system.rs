@@ -49,17 +49,17 @@ pub async fn sysinfo(ctx: super::Context<'_>) -> Result<(), anyhow::Error> {
 
     let embed = serenity::CreateEmbed::default()
         .title("🖥️ System Information")
-        .field("Hostname", &snap.hostname, true)
-        .field("OS", &snap.os, true)
-        .field("Kernel", &snap.kernel, true)
+        .field("Hostname", snap.hostname, true)
+        .field("OS", snap.os, true)
+        .field("Kernel", snap.kernel, true)
         .field(
             "Uptime",
-            &format!("{}d {}h {}m", uptime_days, uptime_hrs, uptime_min),
+            format!("{}d {}h {}m", uptime_days, uptime_hrs, uptime_min),
             true,
         )
         .field(
             "CPU",
-            &format!(
+            format!(
                 "{} ({} cores) — {:.1}%",
                 snap.cpu_brand, snap.cpu_count, snap.cpu_usage
             ),
@@ -67,7 +67,7 @@ pub async fn sysinfo(ctx: super::Context<'_>) -> Result<(), anyhow::Error> {
         )
         .field(
             "Memory",
-            &format!(
+            format!(
                 "{:.1} GB / {:.1} GB ({}%)",
                 mem_used_gb, mem_total_gb, mem_pct
             ),
@@ -75,11 +75,11 @@ pub async fn sysinfo(ctx: super::Context<'_>) -> Result<(), anyhow::Error> {
         )
         .field(
             "Swap",
-            &format!("{:.1} GB / {:.1} GB", swap_used_gb, swap_total_gb),
+            format!("{:.1} GB / {:.1} GB", swap_used_gb, swap_total_gb),
             true,
         )
-        .field("Disks", &disk_lines.join("\n"), false)
-        .field("Network", &net_lines.join("\n"), false)
+        .field("Disks", disk_lines.join("\n"), false)
+        .field("Network", net_lines.join("\n"), false)
         .color(0x00FF00);
 
     ctx.send(poise::CreateReply::default().embed(embed)).await?;

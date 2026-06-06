@@ -44,9 +44,9 @@ pub async fn ping(
 
     let embed = serenity::CreateEmbed::default()
         .title(format!("🌐 Ping — {}", host))
-        .field("IP Address", &resolved.to_string(), true)
+        .field("IP Address", resolved.to_string(), true)
         .field("DNS Resolution", format!("{} ms", resolve_time.as_millis()), true)
-        .field("TCP Port 80", &status, false)
+        .field("TCP Port 80", status, false)
         .color(if reachable { 0x00FF00 } else { 0xFF0000 });
 
     ctx.send(poise::CreateReply::default().embed(embed)).await?;
@@ -63,12 +63,11 @@ pub async fn portscan(
 ) -> Result<(), anyhow::Error> {
     ctx.defer().await?;
 
-    let ip = match resolve_host(&host) {
-        Ok(ip) => ip,
-        Err(e) => {
-            ctx.say(format!("❌ DNS resolution failed: {}", e)).await?;
-            return Ok(());
-        }
+    let ip = if let Ok(ip) = resolve_host(&host) {
+        ip
+    } else {
+        ctx.say(format!("❌ DNS resolution failed: {}", host)).await?;
+        return Ok(());
     };
 
     let is_range = mode.as_deref() == Some("range");
@@ -141,18 +140,15 @@ pub async fn ipintel(
         .field("Timezone", info.timezone.as_deref().unwrap_or("N/A"), true)
         .color(0x9B59B6);
 
-    if data.config.abuseipdb_token.is_some() {
-        match client.abuseipdb_lookup(&ip).await {
-            Ok(report) => {
-                embed = embed.field(
-                    "Abuse Confidence",
-                    format!("{}%", report.abuse_confidence_score),
-                    true,
-                );
-                embed = embed.field("Total Reports", &report.total_reports.to_string(), true);
-                embed = embed.field("ISP (AbuseIPDB)", &report.isp, true);
-            }
-            Err(_) => {}
+    if let Some(ref _token) = data.config.abuseipdb_token {
+        if let Ok(report) = client.abuseipdb_lookup(&ip).await {
+            embed = embed.field(
+                "Abuse Confidence",
+                format!("{}%", report.abuse_confidence_score),
+                true,
+            );
+            embed = embed.field("Total Reports", report.total_reports.to_string(), true);
+            embed = embed.field("ISP (AbuseIPDB)", report.isp, true);
         }
     }
 

@@ -71,11 +71,11 @@ pub async fn memberinfo(
     let embed = serenity::CreateEmbed::default()
         .title(format!("Member Info — {}", user.name))
         .color(0x5865F2)
-        .field("ID", &user.id.to_string(), true)
-        .field("Display Name", &*display_name, true)
-        .field("Joined Server", &joined, true)
-        .field("Account Created", &created, true)
-        .field("Roles", &if role_names.is_empty() { "None".to_string() } else { role_names.join(", ") }, false)
+        .field("ID", user.id.to_string(), true)
+        .field("Display Name", display_name.to_owned(), true)
+        .field("Joined Server", joined, true)
+        .field("Account Created", created, true)
+        .field("Roles", if role_names.is_empty() { "None".to_string() } else { role_names.join(", ") }, false)
         .thumbnail(user.face());
 
     ctx.send(poise::CreateReply::default().embed(embed)).await?;

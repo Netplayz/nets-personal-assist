@@ -23,10 +23,10 @@ pub async fn roblox(
     let embed = poise::serenity_prelude::CreateEmbed::default()
         .title(format!("{} (@{})", user.display_name, user.name))
         .url(format!("https://www.roblox.com/users/{}/profile", user.id))
-        .field("User ID", &user.id.to_string(), true)
-        .field("Display Name", &user.display_name, true)
-        .field("Description", &truncate(&user.description, 200), false)
-        .field("Created", &user.created, true)
+        .field("User ID", user.id.to_string(), true)
+        .field("Display Name", user.display_name.clone(), true)
+        .field("Description", truncate(&user.description, 200), false)
+        .field("Created", user.created.clone(), true)
         .color(0xED4245)
         .thumbnail(&avatar);
 
@@ -46,10 +46,10 @@ pub async fn discord(
 
     let embed = poise::serenity_prelude::CreateEmbed::default()
         .title(format!("Discord User — {}", user.name))
-        .field("ID", &user.id.to_string(), true)
-        .field("Display Name", &*display_name, true)
-        .field("Account Created", &created, true)
-        .field("Bot", &*is_bot, true)
+        .field("ID", user.id.to_string(), true)
+        .field("Display Name", display_name.to_owned(), true)
+        .field("Account Created", created, true)
+        .field("Bot", is_bot.to_string(), true)
         .color(0x5865F2)
         .thumbnail(user.face());
 

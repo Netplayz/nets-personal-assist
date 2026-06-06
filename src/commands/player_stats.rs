@@ -24,10 +24,10 @@ pub async fn playtime(
     let formatted = time::format_duration_seconds(player.playtime_seconds);
     let embed = poise::serenity_prelude::CreateEmbed::default()
         .title(format!("Playtime — {}", player.username))
-        .field("Roblox ID", &player.roblox_id.to_string(), true)
-        .field("Playtime", &formatted, true)
-        .field("First Seen", &player.created_at, true)
-        .field("Last Updated", &player.updated_at, true)
+        .field("Roblox ID", player.roblox_id.to_string(), true)
+        .field("Playtime", formatted, true)
+        .field("First Seen", player.created_at, true)
+        .field("Last Updated", player.updated_at, true)
         .color(0x00FF00);
 
     ctx.send(poise::CreateReply::default().embed(embed)).await?;
