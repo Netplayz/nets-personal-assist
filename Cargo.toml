@@ -1,0 +1,33 @@
+[package]
+name = "operation-what-the-fuck"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+opt-level = 3
+strip = "symbols"
+
+[dependencies]
+poise = { version = "0.6" }
+serenity = "0.12"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "net", "time", "process"] }
+sqlx = { version = "0.8", features = ["runtime-tokio", "sqlite", "migrate"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+simd-json = "0.14"
+reqwest = { version = "0.12", features = ["json", "gzip"] }
+chrono = { version = "0.4", features = ["serde"] }
+chrono-tz = "0.10"
+sysinfo = "0.33"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+dotenvy = "0.15"
+anyhow = "1"
+moka = { version = "0.12", features = ["future"] }
+parking_lot = "0.12"
+dashmap = "6"
+ahash = "0.8"
+fastrand = "2"
+itertools = "0.13"
