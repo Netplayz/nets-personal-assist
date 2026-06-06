@@ -19,6 +19,7 @@ jobs:
       - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           toolchain: stable
+      - uses: Swatinem/rust-cache@v2
       - run: cargo check
 
   clippy:
@@ -30,6 +31,7 @@ jobs:
         with:
           toolchain: stable
           components: clippy
+      - uses: Swatinem/rust-cache@v2
       - run: cargo clippy -- -D warnings
 
   fmt:
@@ -51,7 +53,9 @@ jobs:
       - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           toolchain: stable
+      - uses: Swatinem/rust-cache@v2
       - run: cargo test
+      - run: cargo test --release
 
   build:
     name: Build (release)
@@ -61,8 +65,8 @@ jobs:
       - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           toolchain: stable
-      - run: sudo apt-get update && sudo apt-get install -y libsqlite3-dev
       - uses: Swatinem/rust-cache@v2
+      - run: sudo apt-get update && sudo apt-get install -y libsqlite3-dev
       - run: cargo build --release
       - name: Upload binary
         uses: actions/upload-artifact@v4
